@@ -19,8 +19,9 @@ fake = Faker()
 
 for k in range(4000):
     review=Recipe(Review, submitted_at=fake.date_between(start_date=start_date, end_date=end_date))
+    question = Question.objects.get(id=random.randint(1,4))
     answer = Recipe(Answer, 
                 review=foreign_key(review),
-                question=Question.objects.get(id=random.randint(1,4)),
-                choice=Choice.objects.get(id=random.randint(1,4))) 
+                question=question,
+                choice=random.choice(question.choices.all())) 
     answer.make()
