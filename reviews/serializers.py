@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Review, Question, Answer, Choice
-
+from django.db.models import Count
 
 
 class ChoiceSerializer(serializers.ModelSerializer):
@@ -44,6 +44,19 @@ class ReviewSerializer(serializers.ModelSerializer):
             'answers',
         ]
 
+class ReviewCountSerializer(serializers.ModelSerializer):
+    answers = serializers.SerializerMethodField()
+
+    def get_answers(self, obj):
+        answer = Answer.objects.filter(review=obj.id)
+        response = AnswerSerializer(answer, many=True).data
+        return {"count" : len(response)}
+    class Meta:
+        model = Review
+        fields = [
+            'submitted_at',
+            'answers',
+        ]
 
 class AnswerCountSerializer(serializers.ModelSerializer):
     review = ReviewSerializer(read_only=True)
