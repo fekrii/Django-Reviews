@@ -1,0 +1,19 @@
+[run]
+omit =
+    *venv/*
+    conftest.py
+    *tests*
+    *settings.py*
+    *manage.py*
+    */migrations/*
+
+[report]
+omit =
+   *venv/*
+   conftest.py
+   *tests*
+   *__init__.py*
+   *settings.py*
+    *manage.py*
+    */migrations/*
+
